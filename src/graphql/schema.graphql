@@ -1,0 +1,95 @@
+type Query {
+  properties(filter: PropertyFilter): [Property!]!
+  property(id: ID!): Property
+  bookings(filter: BookingFilter): [Booking!]!
+  booking(id: ID!): Booking
+}
+
+type Mutation {
+  createProperty(input: PropertyInput!): Property!
+  updateProperty(id: ID!, input: PropertyInput!): Property!
+  deleteProperty(id: ID!): Boolean!
+  createBooking(input: BookingInput!): Booking!
+  updateBooking(id: ID!, input: BookingUpdateInput!): Booking!
+  cancelBooking(id: ID!): Booking!
+}
+
+type Property {
+  id: ID!
+  title: String!
+  description: String!
+  type: PropertyType!
+  location: String!
+  price: Float!
+  images: [String!]!
+  features: [String!]!
+  available: Boolean!
+  bookings: [Booking!]!
+}
+
+type Booking {
+  id: ID!
+  property: Property!
+  user: User!
+  checkIn: String!
+  checkOut: String!
+  status: BookingStatus!
+  totalPrice: Float!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type User {
+  id: ID!
+  email: String!
+  bookings: [Booking!]!
+}
+
+enum PropertyType {
+  APARTMENT
+  VILLA
+  TRADITIONAL
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
+input PropertyFilter {
+  type: PropertyType
+  location: String
+  minPrice: Float
+  maxPrice: Float
+  available: Boolean
+}
+
+input BookingFilter {
+  status: BookingStatus
+  fromDate: String
+  toDate: String
+}
+
+input PropertyInput {
+  title: String!
+  description: String!
+  type: PropertyType!
+  location: String!
+  price: Float!
+  images: [String!]!
+  features: [String!]!
+  available: Boolean!
+}
+
+input BookingInput {
+  propertyId: ID!
+  checkIn: String!
+  checkOut: String!
+}
+
+input BookingUpdateInput {
+  checkIn: String
+  checkOut: String
+  status: BookingStatus
+}

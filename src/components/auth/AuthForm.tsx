@@ -2,27 +2,19 @@ import React, { useState } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import { Mail, Lock, Loader } from 'lucide-react';
 
-type AuthMode = 'signin' | 'signup';
-
 export default function AuthForm() {
-  const [mode, setMode] = useState<AuthMode>('signin');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const { signIn, signUp, error } = useAuth();
+  const { signIn, error } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    
     try {
-      if (mode === 'signup') {
-        await signUp(email, password);
-      } else {
-        await signIn(email, password);
-      }
+      await signIn(email, password);
     } catch (err) {
-      console.error('Erreur d\'authentification:', err);
+      console.error("Erreur d'authentification:", err);
     } finally {
       setLoading(false);
     }
@@ -32,18 +24,16 @@ export default function AuthForm() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            {mode === 'signin' ? 'Connexion' : 'Créer un compte'}
-          </h2>
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Connexion</h2>
         </div>
-        
+
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           {error && (
             <div className="rounded-md bg-red-50 p-4">
               <p className="text-sm text-red-700">{error}</p>
             </div>
           )}
-          
+
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
               <label htmlFor="email" className="sr-only">Email</label>
@@ -62,7 +52,7 @@ export default function AuthForm() {
                 />
               </div>
             </div>
-            
+
             <div>
               <label htmlFor="password" className="sr-only">Mot de passe</label>
               <div className="relative">
@@ -91,22 +81,12 @@ export default function AuthForm() {
               {loading ? (
                 <Loader className="animate-spin h-5 w-5" />
               ) : (
-                mode === 'signin' ? 'Se connecter' : 'S\'inscrire'
+                'Se connecter'
               )}
             </button>
           </div>
 
-          <div className="text-center">
-            <button
-              type="button"
-              onClick={() => setMode(mode === 'signin' ? 'signup' : 'signin')}
-              className="text-sm text-[#9DC44D] hover:text-[#8BB43D]"
-            >
-              {mode === 'signin' 
-                ? 'Pas encore de compte ? S\'inscrire' 
-                : 'Déjà un compte ? Se connecter'}
-            </button>
-          </div>
+          {/* Registration toggle intentionally hidden. Keep code easy to restore. */}
         </form>
       </div>
     </div>

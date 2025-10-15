@@ -4,6 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { fr } from 'date-fns/locale';
 
 interface DatePickerProps {
+  id?: string;
   selected: Date | null;
   onChange: (date: Date | null) => void;
   minDate?: Date;
@@ -12,6 +13,7 @@ interface DatePickerProps {
 }
 
 export default function DatePicker({
+  id,
   selected,
   onChange,
   minDate,
@@ -20,6 +22,7 @@ export default function DatePicker({
 }: DatePickerProps) {
   return (
     <ReactDatePicker
+      id={id}
       selected={selected}
       onChange={onChange}
       minDate={minDate}

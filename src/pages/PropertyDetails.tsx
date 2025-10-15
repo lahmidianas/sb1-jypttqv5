@@ -1,17 +1,31 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useProperty } from '../hooks/useProperty';
-import { MapPin, Euro, Check, Loader } from 'lucide-react';
+import { MapPin, Check, Loader } from 'lucide-react';
 import PropertyCalendar from '../components/properties/PropertyCalendar';
 import BookingRequestForm from '../components/properties/BookingRequestForm';
 import { formatLocation, formatPrice } from '../utils/format';
-import ImageGallery from '../components/properties/ImageGallery';
 import VideoEmbed from '../components/properties/VideoEmbed';
+// Swiper (carousel)
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, A11y } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
+// Lightbox (fullscreen overlay)
+import Lightbox from 'yet-another-react-lightbox';
+import 'yet-another-react-lightbox/styles.css';
+import Fullscreen from 'yet-another-react-lightbox/plugins/fullscreen';
+import Slideshow from 'yet-another-react-lightbox/plugins/slideshow';
+import Zoom from 'yet-another-react-lightbox/plugins/zoom';
 
 export default function PropertyDetails() {
   const { id } = useParams();
   const { property, loading, error } = useProperty(id);
   const [selectedDates, setSelectedDates] = useState<[Date | null, Date | null]>([null, null]);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
 
   if (loading) {
     return (
@@ -32,7 +46,37 @@ export default function PropertyDetails() {
   return (
     <div className="pt-20 min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
-        <ImageGallery images={property.images} title={property.title} />
+        <div className="max-w-5xl mx-auto rounded-lg overflow-hidden shadow-md bg-white">
+          <Swiper
+            modules={[Navigation, Pagination, A11y]}
+            navigation
+            pagination={{ clickable: true }}
+            a11y={{ enabled: true }}
+            autoHeight
+            style={{ width: '100%' }}
+          >
+            {property.images.map((src, idx) => (
+              <SwiperSlide key={idx}>
+                <img
+                  src={src}
+                  alt={`${property.title} - photo ${idx + 1}`}
+                  loading="lazy"
+                  className="w-full h-auto object-cover cursor-zoom-in"
+                  onClick={() => { setLightboxIndex(idx); setLightboxOpen(true); }}
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+
+        {/* Lightbox overlay */}
+        <Lightbox
+          open={lightboxOpen}
+          close={() => setLightboxOpen(false)}
+          index={lightboxIndex}
+          slides={property.images.map((src) => ({ src }))}
+          plugins={[Fullscreen, Slideshow, Zoom]}
+        />
 
         <div className="grid md:grid-cols-3 gap-8 mt-8">
           <div className="md:col-span-2 space-y-6">
@@ -79,10 +123,9 @@ export default function PropertyDetails() {
           <div className="md:col-span-1">
             <div className="bg-white p-6 rounded-lg shadow-md sticky top-24">
               <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center text-2xl font-bold text-primary">
-                  <Euro className="h-6 w-6 mr-1" />
-                  <span>{formatPrice(property.price, property.listingType)}</span>
-                </div>
+              <div className="flex items-center text-2xl font-bold text-primary">
+                <span>{formatPrice(property.price, property.listingType)}</span>
+              </div>
               </div>
               <BookingRequestForm 
                 propertyId={property.id}

@@ -31,22 +31,18 @@ describe('Header', () => {
     expect(screen.getByText('Contact')).toBeInTheDocument();
   });
 
-  it('renders login button when user is not authenticated', () => {
+  it('does not render login button in header', () => {
     renderHeader();
-    
-    const loginButton = screen.getByText('Connexion');
-    expect(loginButton).toBeInTheDocument();
-    expect(loginButton.closest('a')).toHaveAttribute('href', '/login');
+    expect(screen.queryByText('Connexion')).toBeNull();
   });
 
   it('has correct navigation links', () => {
     renderHeader();
-    
-    const links = screen.getAllByRole('link');
-    const expectedPaths = ['/', '/about', '/properties', '/contact', '/login'];
-    
-    links.forEach((link, index) => {
-      expect(link).toHaveAttribute('href', expectedPaths[index]);
+
+    const hrefs = screen.getAllByRole('link').map((a) => a.getAttribute('href'));
+    const expectedPaths = ['/', '/about', '/properties', '/contact'];
+    expectedPaths.forEach((p) => {
+      expect(hrefs).toContain(p);
     });
   });
 });

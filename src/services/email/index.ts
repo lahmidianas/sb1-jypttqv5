@@ -18,5 +18,5 @@ export async function sendBookingRequestEmail(data: EmailData): Promise<boolean>
 
 export async function sendBookingRequest(data: BookingRequestData): Promise<boolean> {
   const emailData = createBookingRequestEmail(data);
-  return sendEmail(emailData);
+  return sendBookingRequestEmail(emailData);
 }

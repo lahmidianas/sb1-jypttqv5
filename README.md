@@ -1,8 +1,19 @@
 # MedImmoSecret
 
+## Getting Started
+
+- Requirements: Node.js 18+, npm
+- Install deps: `npm install`
+- Environment variables (create `.env.local` or `.env`):
+  - `VITE_SUPABASE_URL`
+  - `VITE_SUPABASE_ANON_KEY`
+  - Optional: `VITE_GRAPHQL_URL` (defaults to `http://localhost:4000/graphql`)
+- Run dev server: `npm run dev`
+- Build: `npm run build` and preview: `npm run preview`
+
 ## Testing
 
-The project uses Jest and Testing Library for unit and integration testing. No additional third-party libraries are required for testing.
+The project uses Vitest and Testing Library for unit and integration testing. No additional third-party libraries are required for testing.
 
 ### Running Tests
 

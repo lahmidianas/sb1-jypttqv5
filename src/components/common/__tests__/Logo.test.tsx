@@ -5,15 +5,15 @@ import { BrowserRouter } from 'react-router-dom';
 import Logo from '../Logo';
 
 describe('Logo', () => {
-  it('renders correctly', () => {
+  it('renders logo image', () => {
     render(
       <BrowserRouter>
         <Logo />
       </BrowserRouter>
     );
-    
-    expect(screen.getByText('MEDIMMO')).toBeInTheDocument();
-    expect(screen.getByText('SECRET')).toBeInTheDocument();
+
+    const img = screen.getByAltText('MedImmo-Secret Logo');
+    expect(img).toBeInTheDocument();
   });
 
   it('links to home page', () => {
@@ -22,7 +22,7 @@ describe('Logo', () => {
         <Logo />
       </BrowserRouter>
     );
-    
+
     const link = screen.getByRole('link');
     expect(link).toHaveAttribute('href', '/');
   });

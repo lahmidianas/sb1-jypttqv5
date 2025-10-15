@@ -2,6 +2,10 @@ import { User } from '@supabase/supabase-js';
 import { supabase } from './supabase';
 
 export async function signUp(email: string, password: string) {
+  // Client-side guard: disable registration unless explicitly allowed
+  if (import.meta.env.VITE_ALLOW_REGISTRATION !== 'true') {
+    throw new Error('Registration is disabled');
+  }
   const { data, error } = await supabase.auth.signUp({
     email,
     password,

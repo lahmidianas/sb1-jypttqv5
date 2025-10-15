@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Header from '../components/Header';
+import Footer from '../components/common/Footer';
 import Home from '../pages/Home';
 import About from '../pages/About';
 import Services from '../pages/Services';
@@ -22,6 +23,7 @@ export default function PublicRoutes() {
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </main>
+      <Footer />
     </div>
   );
 }

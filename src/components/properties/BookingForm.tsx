@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { CREATE_BOOKING } from '../../graphql/mutations/bookings';
 import DatePicker from '../common/DatePicker';
-import { calculateTotalPrice } from '../../utils/bookings';
 import { useAuthContext } from '../../contexts/AuthContext';
 
 interface BookingFormProps {
@@ -16,15 +15,17 @@ export default function BookingForm({ propertyId, price }: BookingFormProps) {
   const { user } = useAuthContext();
   const [dates, setDates] = useState({
     checkIn: null as Date | null,
-    checkOut: null as Date | null
+    checkOut: null as Date | null,
   });
   const [totalPrice, setTotalPrice] = useState(0);
-  const [createBooking, { loading }] = useMutation(CREATE_BOOKING);
+  const [createBooking, { loading } = { loading: false } as any] = useMutation(CREATE_BOOKING);
 
   const handleDateChange = (type: 'checkIn' | 'checkOut', date: Date | null) => {
     setDates(prev => ({ ...prev, [type]: date }));
-    
-    if (date && dates[type === 'checkIn' ? 'checkOut' : 'checkIn']) {
+
+    const other = type === 'checkIn' ? 'checkOut' : 'checkIn';
+    const otherDate = dates[other];
+    if (date && otherDate) {
       const start = type === 'checkIn' ? date : dates.checkIn!;
       const end = type === 'checkOut' ? date : dates.checkOut!;
       const nights = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
@@ -36,7 +37,7 @@ export default function BookingForm({ propertyId, price }: BookingFormProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!user) {
       navigate('/login');
       return;
@@ -50,9 +51,9 @@ export default function BookingForm({ propertyId, price }: BookingFormProps) {
           input: {
             propertyId,
             checkIn: dates.checkIn.toISOString().split('T')[0],
-            checkOut: dates.checkOut.toISOString().split('T')[0]
-          }
-        }
+            checkOut: dates.checkOut.toISOString().split('T')[0],
+          },
+        },
       });
 
       navigate('/bookings');
@@ -93,7 +94,14 @@ export default function BookingForm({ propertyId, price }: BookingFormProps) {
         <div className="pt-4 border-t">
           <div className="flex justify-between text-sm mb-2">
             <span>Prix total</span>
-            <span className="font-semibold">{totalPrice}€</span>
+            <span className="font-semibold">
+              {new Intl.NumberFormat('fr-FR', {
+                style: 'currency',
+                currency: 'MAD',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0,
+              }).format(totalPrice)}
+            </span>
           </div>
         </div>
       )}

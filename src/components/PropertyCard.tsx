@@ -1,8 +1,13 @@
 import React from 'react';
-import { MapPin, Euro, Tag } from 'lucide-react';
+import { MapPin, Tag } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Property } from '../types';
 import { formatLocation, formatPrice } from '../utils/format';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination, Navigation, Autoplay, A11y } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 
 interface PropertyCardProps {
   property: Property;
@@ -15,21 +20,38 @@ const listingTypeLabels = {
 };
 
 export default function PropertyCard({ property }: PropertyCardProps) {
+  const images = property.images?.length ? property.images : ['/placeholder.jpg'];
+
   return (
     <Link 
       to={`/properties/${property.id}`}
       className="block bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:-translate-y-1"
     >
       <div className="relative h-64">
-        <img 
-          src={property.images[0]} 
-          alt={property.title}
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute top-4 right-4 bg-white px-3 py-1 rounded-full text-sm font-semibold text-primary">
+        <Swiper
+          modules={[Pagination, Navigation, Autoplay, A11y]}
+          navigation
+          pagination={{ clickable: true }}
+          autoplay={{ delay: 4000, disableOnInteraction: false }}
+          loop={images.length > 1}
+          a11y={{ enabled: true }}
+          className="h-full"
+        >
+          {images.map((src, idx) => (
+            <SwiperSlide key={idx} className="h-full">
+              <img
+                src={src}
+                alt={`${property.title} - photo ${idx + 1}`}
+                loading="lazy"
+                className="w-full h-full object-cover"
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+        <div className="pointer-events-none absolute top-4 right-4 bg-white/95 px-3 py-1 rounded-full text-sm font-semibold text-primary">
           {property.type}
         </div>
-        <div className="absolute bottom-4 left-4 bg-primary text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-2">
+        <div className="pointer-events-none absolute bottom-4 left-4 bg-primary text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-2">
           <Tag className="h-4 w-4" />
           {listingTypeLabels[property.listingType]}
         </div>
@@ -47,7 +69,6 @@ export default function PropertyCard({ property }: PropertyCardProps) {
         
         <div className="flex items-center justify-between">
           <div className="flex items-center text-primary font-semibold">
-            <Euro className="h-4 w-4 mr-1" />
             <span>{formatPrice(property.price, property.listingType)}</span>
           </div>
         </div>

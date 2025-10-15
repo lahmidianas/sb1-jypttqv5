@@ -33,13 +33,7 @@ export default function Header() {
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-200 group-hover:w-full" />
               </Link>
             ))}
-            <Link
-              to={user ? "/admin" : "/login"}
-              className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
-            >
-              <User className="h-4 w-4" />
-              {user ? "Admin" : "Connexion"}
-            </Link>
+            {/* Login/Admin button removed; replaced by subtle footer link */}
           </nav>
 
           {/* Mobile Menu Button */}
@@ -69,13 +63,7 @@ export default function Header() {
                   {label}
                 </Link>
               ))}
-              <Link
-                to={user ? "/admin" : "/login"}
-                className="text-white hover:text-primary font-display text-lg tracking-wide"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {user ? "Admin" : "Connexion"}
-              </Link>
+              {/* Login/Admin link removed in mobile menu */}
             </div>
           </nav>
         )}

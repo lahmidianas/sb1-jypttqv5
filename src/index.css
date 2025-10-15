@@ -61,3 +61,27 @@
   max-height: 100%;
   object-fit: contain;
 }
+
+/* Swiper brand styling */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #9DC44D;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 1.5rem;
+}
+
+.swiper-button-disabled {
+  color: rgba(157, 196, 77, 0.35) !important;
+}
+
+.swiper-pagination-bullet {
+  background: rgba(157, 196, 77, 0.35);
+  opacity: 1;
+}
+
+.swiper-pagination-bullet-active {
+  background: #9DC44D;
+}

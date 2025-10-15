@@ -10,7 +10,7 @@ export default function About() {
     <>
       <SEO 
         title="À propos"
-        description="Découvrez l'histoire et les valeurs de MED IMMO SECRET, votre partenaire immobilier de confiance à Tanger depuis 2015."
+        description="Découvrez l'histoire et les valeurs de OK IMMO SECRET, votre partenaire immobilier de confiance à Tanger depuis 2015."
       />
       <div className="pt-20">
         <AboutHero />

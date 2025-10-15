@@ -32,14 +32,14 @@ const socialLinks = [
     icon: Facebook,
     label: 'Facebook',
     description: 'Suivez-nous sur Facebook',
-    url: 'https://www.facebook.com/immosecret',
+    url: 'https://www.facebook.com/profile.php?id=61577355586787&mibextid=wwXIfr&rdid=c7cs7dHAbcUUsii4&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1BRosKGaJA%2F%3Fmibextid%3DwwXIfr#',
     color: '#1877F2'
   },
   {
     icon: Instagram,
     label: 'Instagram',
     description: 'Suivez-nous sur Instagram',
-    url: 'https://www.instagram.com/medimmosecret/',
+    url: 'https://www.instagram.com/okimmosecret/',
     color: '#E4405F'
   },
   {

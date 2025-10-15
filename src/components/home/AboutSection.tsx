@@ -9,7 +9,7 @@ export default function AboutSection() {
           <div>
             <h2 className="text-3xl font-bold mb-6">Qui sommes-nous ?</h2>
             <p className="text-gray-600 mb-8 text-lg leading-relaxed">
-              Située au cœur de Tanger, MED IMMO SECRET offre des services immobiliers fiables et personnalisés. 
+              Située au cœur de Tanger, OK IMMO SECRET offre des services immobiliers fiables et personnalisés. 
               Notre expertise nous permet de vous accompagner à chaque étape de votre projet immobilier.
             </p>
             <div className="grid grid-cols-3 gap-6">

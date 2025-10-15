@@ -5,7 +5,7 @@ const testimonials = [
   {
     name: 'Sarah L.',
     role: 'Propriétaire',
-    content: 'Grâce à MED IMMO SECRET, j\'ai trouvé l\'appartement de mes rêves rapidement et sans stress !',
+    content: 'Grâce à OK IMMO SECRET, j\'ai trouvé l\'appartement de mes rêves rapidement et sans stress !',
     rating: 5
   },
   {

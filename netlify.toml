@@ -1,0 +1,8 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  VITE_SUPABASE_URL = "https://lxmhpvomiwizlhjsxjli.supabase.co"
+  VITE_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx4bWhwdm9taXdpemxoanN4amxpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzU0OTE2MTUsImV4cCI6MjA1MTA2NzYxNX0.N-8CFdESS_02XXknni4XE9jb9srAq0LZ5tJTziEbUSA"
+  VITE_ALLOW_REGISTRATION = "false"

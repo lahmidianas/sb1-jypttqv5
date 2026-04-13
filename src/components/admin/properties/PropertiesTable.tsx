@@ -4,6 +4,7 @@ import { Edit, Trash2, Eye } from 'lucide-react';
 import { Property } from '../../../types';
 import { useDeleteProperty } from '../../../hooks/useDeleteProperty';
 import { formatPrice } from '../../../utils/format';
+import { normalizeSupabaseStorageUrl } from '../../../utils/supabaseStorage';
 
 interface PropertiesTableProps {
   properties: Property[];
@@ -42,7 +43,7 @@ export default function PropertiesTable({ properties, loading, error }: Properti
               <td className="px-6 py-4">
                 <div className="flex items-center">
                   <img
-                    src={property.images[0]}
+                    src={normalizeSupabaseStorageUrl(property.images[0])}
                     alt={property.title}
                     className="h-10 w-10 rounded-lg object-cover"
                   />

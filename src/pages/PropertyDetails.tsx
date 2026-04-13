@@ -6,6 +6,7 @@ import PropertyCalendar from '../components/properties/PropertyCalendar';
 import BookingRequestForm from '../components/properties/BookingRequestForm';
 import { formatLocation, formatPrice } from '../utils/format';
 import VideoEmbed from '../components/properties/VideoEmbed';
+import { normalizeSupabaseStorageUrls } from '../utils/supabaseStorage';
 // Swiper (carousel)
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, A11y } from 'swiper/modules';
@@ -43,6 +44,8 @@ export default function PropertyDetails() {
     );
   }
 
+  const images = normalizeSupabaseStorageUrls(property.images);
+
   return (
     <div className="pt-20 min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
@@ -55,7 +58,7 @@ export default function PropertyDetails() {
             autoHeight
             style={{ width: '100%' }}
           >
-            {property.images.map((src, idx) => (
+            {images.map((src, idx) => (
               <SwiperSlide key={idx}>
                 <img
                   src={src}
@@ -74,7 +77,7 @@ export default function PropertyDetails() {
           open={lightboxOpen}
           close={() => setLightboxOpen(false)}
           index={lightboxIndex}
-          slides={property.images.map((src) => ({ src }))}
+          slides={images.map((src) => ({ src }))}
           plugins={[Fullscreen, Slideshow, Zoom]}
         />
 

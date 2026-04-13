@@ -2,7 +2,9 @@ import { createClient } from '@supabase/supabase-js';
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 
-const [backupRootArg] = process.argv.slice(2);
+const args = process.argv.slice(2);
+const backupRootArg = args.find((arg) => !arg.startsWith('--'));
+const overwrite = args.includes('--overwrite');
 
 if (!backupRootArg) {
   console.error('Usage: npm run restore:storage -- <backup-root>');
@@ -34,6 +36,28 @@ async function walk(dir) {
     return [fullPath];
   }));
   return files.flat();
+}
+
+function getContentType(filePath) {
+  switch (path.extname(filePath).toLowerCase()) {
+    case '.jpg':
+    case '.jpeg':
+      return 'image/jpeg';
+    case '.png':
+      return 'image/png';
+    case '.webp':
+      return 'image/webp';
+    case '.gif':
+      return 'image/gif';
+    case '.svg':
+      return 'image/svg+xml';
+    case '.avif':
+      return 'image/avif';
+    case '.pdf':
+      return 'application/pdf';
+    default:
+      return 'application/octet-stream';
+  }
 }
 
 async function listExistingObjects(bucketName) {
@@ -91,13 +115,16 @@ async function main() {
 
     for (const filePath of files) {
       const objectPath = path.relative(bucketRoot, filePath).replaceAll(path.sep, '/');
-      if (existing.has(objectPath)) {
+      if (!overwrite && existing.has(objectPath)) {
         continue;
       }
       const fileBuffer = await fs.readFile(filePath);
       const { error } = await supabase.storage
         .from(bucket.name)
-        .upload(objectPath, fileBuffer, { upsert: true });
+        .upload(objectPath, fileBuffer, {
+          upsert: true,
+          contentType: getContentType(filePath),
+        });
 
       if (error) {
         throw new Error(`Failed uploading ${bucket.name}/${objectPath}: ${error.message}`);

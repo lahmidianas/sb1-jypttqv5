@@ -3,6 +3,7 @@ import { MapPin, Tag } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Property } from '../types';
 import { formatLocation, formatPrice } from '../utils/format';
+import { normalizeSupabaseStorageUrls } from '../utils/supabaseStorage';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation, Autoplay, A11y } from 'swiper/modules';
 import 'swiper/css';
@@ -20,7 +21,9 @@ const listingTypeLabels = {
 };
 
 export default function PropertyCard({ property }: PropertyCardProps) {
-  const images = property.images?.length ? property.images : ['/placeholder.jpg'];
+  const images = property.images?.length
+    ? normalizeSupabaseStorageUrls(property.images)
+    : ['/placeholder.jpg'];
 
   return (
     <Link 

@@ -10,6 +10,11 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+.env
+.env.*
+!.env.example
+.choco-download/
+.pgsql-bin/
 *.local
 
 # Editor directories and files

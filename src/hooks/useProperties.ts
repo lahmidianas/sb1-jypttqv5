@@ -9,6 +9,9 @@ interface UsePropertiesOptions {
   district?: string;
   minPrice?: string;
   maxPrice?: string;
+  limit?: number;
+  subscribe?: boolean;
+  selectFields?: string;
 }
 
 export function useProperties(options: UsePropertiesOptions = {}) {
@@ -24,7 +27,7 @@ export function useProperties(options: UsePropertiesOptions = {}) {
         
         let query = supabase
           .from('properties')
-          .select('*')
+          .select(options.selectFields || '*')
           .order('created_at', { ascending: false });
 
         if (options.listingType) {
@@ -50,6 +53,10 @@ export function useProperties(options: UsePropertiesOptions = {}) {
         if (options.maxPrice) {
           query = query.lte('price', parseFloat(options.maxPrice));
         }
+
+        if (options.limit) {
+          query = query.limit(options.limit);
+        }
         
         const { data, error: fetchError } = await query;
         
@@ -66,7 +73,10 @@ export function useProperties(options: UsePropertiesOptions = {}) {
 
     fetchProperties();
 
-    // Subscribe to changes
+    if (!options.subscribe) {
+      return;
+    }
+
     const subscription = supabase
       .channel('properties_changes')
       .on('postgres_changes', { 
@@ -87,7 +97,10 @@ export function useProperties(options: UsePropertiesOptions = {}) {
     options.city,
     options.district,
     options.minPrice,
-    options.maxPrice
+    options.maxPrice,
+    options.limit,
+    options.selectFields,
+    options.subscribe
   ]);
 
   return { properties, loading, error };

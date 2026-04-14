@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/common/Footer';
-import Home from '../pages/Home';
-import About from '../pages/About';
-import Services from '../pages/Services';
-import Properties from '../pages/Properties';
-import PropertyDetails from '../pages/PropertyDetails';
-import Contact from '../pages/Contact';
+
+const Home = lazy(() => import('../pages/Home'));
+const About = lazy(() => import('../pages/About'));
+const Services = lazy(() => import('../pages/Services'));
+const Properties = lazy(() => import('../pages/Properties'));
+const PropertyDetails = lazy(() => import('../pages/PropertyDetails'));
+const Contact = lazy(() => import('../pages/Contact'));
 
 export default function PublicRoutes() {
   return (

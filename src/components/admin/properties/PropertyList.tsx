@@ -6,7 +6,7 @@ import { useProperties } from '../../../hooks/useProperties';
 
 export default function PropertyList() {
   const navigate = useNavigate();
-  const { properties, loading, error } = useProperties();
+  const { properties, loading, error } = useProperties({ subscribe: true });
 
   return (
     <div className="p-6">

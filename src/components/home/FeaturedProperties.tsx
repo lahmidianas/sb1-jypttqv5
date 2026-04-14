@@ -5,7 +5,11 @@ import { ArrowRight, Loader } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function FeaturedProperties() {
-  const { properties, loading, error } = useProperties();
+  const { properties, loading, error } = useProperties({
+    limit: 3,
+    subscribe: false,
+    selectFields: 'id,title,type,listingType,location,city,price,images,available',
+  });
 
   if (loading) {
     return (
@@ -18,8 +22,6 @@ export default function FeaturedProperties() {
   if (error) {
     return null;
   }
-
-  const featuredProperties = properties.slice(0, 3);
 
   return (
     <section className="py-20 bg-gray-50">
@@ -39,7 +41,7 @@ export default function FeaturedProperties() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {featuredProperties.map((property) => (
+          {properties.map((property) => (
             <PropertyCard key={property.id} property={property} />
           ))}
         </div>

@@ -20,7 +20,9 @@ export default function Properties() {
     city: city || undefined,
     district: district || undefined,
     minPrice: minPrice || undefined,
-    maxPrice: maxPrice || undefined
+    maxPrice: maxPrice || undefined,
+    subscribe: false,
+    selectFields: 'id,title,type,listingType,location,city,price,images,available'
   });
 
   return (

@@ -1,18 +1,19 @@
-import React from 'react';
+import React, { lazy } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import AdminLayout from '../components/admin/layout/AdminLayout';
-import Dashboard from '../pages/admin/Dashboard';
-import PropertyList from '../components/admin/properties/PropertyList';
-import NewProperty from '../pages/admin/properties/NewProperty';
-import EditProperty from '../pages/admin/properties/EditProperty';
-import BookingsList from '../pages/admin/bookings/BookingsList';
-import NewBooking from '../pages/admin/bookings/NewBooking';
-import EditBooking from '../pages/admin/bookings/EditBooking';
-import ClientsList from '../pages/admin/clients/ClientsList';
-import NewClient from '../pages/admin/clients/NewClient';
-import EditClient from '../pages/admin/clients/EditClient';
-import ClientDetails from '../pages/admin/clients/ClientDetails';
-import Settings from '../pages/admin/Settings';
+
+const AdminLayout = lazy(() => import('../components/admin/layout/AdminLayout'));
+const Dashboard = lazy(() => import('../pages/admin/Dashboard'));
+const PropertyList = lazy(() => import('../components/admin/properties/PropertyList'));
+const NewProperty = lazy(() => import('../pages/admin/properties/NewProperty'));
+const EditProperty = lazy(() => import('../pages/admin/properties/EditProperty'));
+const BookingsList = lazy(() => import('../pages/admin/bookings/BookingsList'));
+const NewBooking = lazy(() => import('../pages/admin/bookings/NewBooking'));
+const EditBooking = lazy(() => import('../pages/admin/bookings/EditBooking'));
+const ClientsList = lazy(() => import('../pages/admin/clients/ClientsList'));
+const NewClient = lazy(() => import('../pages/admin/clients/NewClient'));
+const EditClient = lazy(() => import('../pages/admin/clients/EditClient'));
+const ClientDetails = lazy(() => import('../pages/admin/clients/ClientDetails'));
+const Settings = lazy(() => import('../pages/admin/Settings'));
 
 export default function AdminRoutes() {
   return (
